@@ -2,6 +2,7 @@ def read_file(filename):
     """
     (str) -> (data)
     """
+    with open(filename, encoding="utf-8") as data:
 
     pass
 

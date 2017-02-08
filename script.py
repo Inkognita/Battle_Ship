@@ -35,7 +35,7 @@ def ship_size(data, coordinates):
         if coordinates[0] - i >= 0:
             if data[coordinates[1]][coordinates[0] - i] != " ":
                 length += 1
-                coordinates_list.append((chr(coordinates[0] + 65), coordinates[1] - i + 1))
+                coordinates_list.append((chr(coordinates[0] - i + 65), coordinates[1] + 1))
                 horisontal = True
             else:
                 break
@@ -46,7 +46,7 @@ def ship_size(data, coordinates):
             if coordinates[0] + i <= 9:
                 if data[coordinates[1]][coordinates[0] + i] != " ":
                     length += 1
-                    coordinates_list.append((chr(coordinates[0] + 65), coordinates[1] + i + 1))
+                    coordinates_list.append((chr(coordinates[0] + i + 65), coordinates[1] + 1))
                     horisontal = True
                 else:
                     break
@@ -57,7 +57,7 @@ def ship_size(data, coordinates):
             if coordinates[1] - i >= 0:
                 if data[coordinates[1] - i][coordinates[0]] != " ":
                     length += 1
-                    coordinates_list.append((chr(coordinates[0] - i + 65), coordinates[1] + 1))
+                    coordinates_list.append((chr(coordinates[0] + 65), coordinates[1] + 1 - i))
                 else:
                     break
             else:
@@ -66,7 +66,7 @@ def ship_size(data, coordinates):
             if coordinates[1] + i <= 9:
                 if data[coordinates[1] + i][coordinates[0]] != " ":
                     length += 1
-                    coordinates_list.append((chr(coordinates[0] + i + 65), coordinates[1] + 1))
+                    coordinates_list.append((chr(coordinates[0] + 65), coordinates[1] + 1 + i))
                 else:
                     break
             else:
@@ -141,7 +141,7 @@ def generate_field():
                 else:
                     for l in range(1, 4 - i):
                         data.add((single_ship[0], single_ship[1] + l))
-                if ship_outline(data) & field_set == set():
+                if ship_outline(data) & field_set == set() and data & field_set == set():
                     field_set |= data
                     break
     data_result = []

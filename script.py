@@ -4,17 +4,17 @@ import random
 def read_file(filename):
     """
     (str) -> (data)
+    Reads from filename and returns it in list of strings
     """
     with open(filename, encoding="utf-8") as data:
         datas = [line.replace("\n", "") for line in data if line]
     return datas
 
-#print(read_file("field_txt.txt"))
-
 
 def has_ship(data, coordinates):
     """
     (data, tuple) -> (bool)
+    Reads data and coordinates of type ('C', 1) and returns bool value if there is ship
     """
     if data[coordinates[1] - 1][ord(coordinates[0]) - 65] == " ":
         return False
@@ -25,6 +25,7 @@ def has_ship(data, coordinates):
 def ship_size(data, coordinates):
     """
     (data, tuple) -> (tuple)
+    Reads data and coordinates of type ('C', 1) and returns tuple of length of ship and its coordinates in a list
     """
     coordinates_list = [coordinates]
     coordinates = (ord(coordinates[0]) - 65, coordinates[1] - 1)
@@ -76,6 +77,7 @@ def ship_size(data, coordinates):
 def is_valid(data):
     """
     (data) -> (bool)
+    Checks if the data_field is valid to play
     """
     ships = {1: 0, 2: 0, 3: 0, 4: 0}
     coordinates_set = set()
@@ -96,6 +98,7 @@ def is_valid(data):
 def field_to_str(data):
     """
     (data) -> (str)
+    Returns single str version of data
     """
     data_string = ""
     for line in data:
@@ -106,6 +109,7 @@ def field_to_str(data):
 def ship_outline(data):
     """
     (set) -> (set)
+    Returns set of outline of ship
     """
     outline_set = set()
     for coordinate in data:
@@ -122,6 +126,7 @@ def ship_outline(data):
 def generate_field():
     """
     () -> (data)
+    Generates field in format of list of strings
     """
     field_set = set()
     for i in range(4):

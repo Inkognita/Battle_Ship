@@ -46,6 +46,8 @@ def ship_size(data, coordinates):
     (data, tuple) -> (tuple)
     Reads data and coordinates of type ('C', 1) and returns tuple of length of ship and its coordinates in a list
     """
+    if not has_ship(data, coordinates):
+        return None
     coordinates_list = [coordinates]
     coordinates = (ord(coordinates[0]) - 65, coordinates[1] - 1)
     length = 1

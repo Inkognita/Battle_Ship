@@ -132,13 +132,15 @@ def generate_field():
     for i in range(4):
         for j in range(i + 1):
             while True:
-                single_ship = (random.randrange(0, 7 + i), random.randrange(0, 7 + i))
                 horisontal = random.choice([True, False])
-                data = {single_ship}
                 if horisontal:
+                    single_ship = (random.randrange(0, 7 + i), random.randrange(0, 10))
+                    data = {single_ship}
                     for l in range(1, 4 - i):
                         data.add((single_ship[0] + l, single_ship[1]))
                 else:
+                    single_ship = (random.randrange(0, 10), random.randrange(0, 7 + i))
+                    data = {single_ship}
                     for l in range(1, 4 - i):
                         data.add((single_ship[0], single_ship[1] + l))
                 if ship_outline(data) & field_set == set() and data & field_set == set():

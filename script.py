@@ -1,6 +1,25 @@
 import random
 
 
+def ship_outline(data):
+    """
+    (set) -> (set)
+    Returns set of outline of ship
+    """
+    outline_set = set()
+    for coordinate in data:
+        if type(coordinate[0]) == str:
+            coordinate = (ord(coordinate[0]) - 65, coordinate[1] - 1)
+        for i in range(-1, 2):
+            if -1 < coordinate[0] + i < 10:
+                for j in range(-1, 2):
+                    if j == 0 and i == 0:
+                        continue
+                    if -1 < coordinate[1] + j < 10:
+                        outline_set.add((coordinate[0] + i, coordinate[1] + j))
+    return outline_set
+
+
 def read_file(filename):
     """
     (str) -> (data)
@@ -87,9 +106,14 @@ def is_valid(data):
                 continue
             if data[line - 1][symbol - 65] != " ":
                 size_result = ship_size(data, (chr(symbol), line))
+                outline_mask = ship_outline(size_result[1])
+                for coords in outline_mask:
+                    coords = (chr(coords[0] + 65), coords[1] + 1)
+                    if coords not in size_result[1] and data[coords[1] - 1][ord(coords[0]) - 65] == "*":
+                        return False
                 coordinates_set.update(size_result[1])
                 ships[size_result[0]] += 1
-    if ships[1] > 3 and ships[2] > 2 and ships[3] > 1 and ships[4] > 0:
+    if ships[1] == 4 and ships[2] == 3 and ships[3] == 2 and ships[4] == 1:
         return True
     else:
         return False
@@ -104,23 +128,6 @@ def field_to_str(data):
     for line in data:
         data_string += line + '\n'
     return data_string
-
-
-def ship_outline(data):
-    """
-    (set) -> (set)
-    Returns set of outline of ship
-    """
-    outline_set = set()
-    for coordinate in data:
-        for i in range(-1, 2):
-            if -1 < coordinate[0] + i < 10:
-                for j in range(-1, 2):
-                    if j == 0 and i == 0:
-                        continue
-                    if -1 < coordinate[1] + j < 10:
-                        outline_set.add((coordinate[0] + i, coordinate[1] + j))
-    return outline_set
 
 
 def generate_field():

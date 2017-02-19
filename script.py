@@ -141,8 +141,7 @@ def generate_field():
     for i in range(4):
         for j in range(i + 1):
             while True:
-                horisontal = random.choice([True, False])
-                if horisontal:
+                if random.choice([True, False]):
                     single_ship = (random.randrange(0, 7 + i), random.randrange(0, 10))
                     data = {single_ship}
                     for l in range(1, 4 - i):

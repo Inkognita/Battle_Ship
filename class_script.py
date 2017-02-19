@@ -15,7 +15,6 @@ class Game:
             for x_coord in range(10):
                 str_res += fields[0][10 * y_coord + x_coord] + "|"
             str_res += "     "
-            #str_res += "\n"
             if len(fields) != 1:
                 str_res += str(y_coord + 1).center(2) + "|"
                 for x_coord in range(10):
@@ -28,7 +27,6 @@ class Game:
         for i in range(2):
             self.add_player()
             input("Press enter to see your field...")
-            #print(self.field_with_ships(self.__curent_player))
             print(self.custom_print([self.field_with_ships(self.__curent_player)], ["Your Field"]))
             input("Press enter")
             print(10 * "\n")
@@ -36,19 +34,17 @@ class Game:
         while True:
             for i, k in ((1, 2), (2, 1)):
                 result_shot = (True, 0)
-                while result_shot[0] == True:
+                while result_shot[0] is True:
                     print("Player {0} is playing".format(self.__players[i - 1]._Player__name))
                     input("Press enter to see ...")
                     print(self.custom_print([self.field_without_ships(k - 1), self.field_with_ships(i - 1)],
                                             ["Enemy's field", "Your Field=)"]))
-                    #print("Enemy's field\n{0}".format(self.field_without_ships(k - 1)))
-                    #print("Your field\n{0}".format(self.field_with_ships(i - 1)))
                     result_shot = self.shoot_at(k - 1, self.__players[0].read_position())
-                    while result_shot[0] == None:
+                    while result_shot[0] is None:
                         print("You were shooting this field, try again")
                         print("Enemy's field\n{0}".format(self.field_without_ships(k - 1)))
                         result_shot = self.shoot_at(k - 1, self.__players[0].read_position())
-                    if result_shot[0] == True:
+                    if result_shot[0]:
                         if result_shot[1] == 1:
                             if self.__fields[k-1].has_ships():
                                 print("You crashed it=)")
@@ -73,6 +69,7 @@ class Game:
     def field_without_ships(self, index):
         return self.__fields[index].field_without_ships()
 
+
 class Player:
     def __init__(self, name="Player"):
         self.__name = name
@@ -88,10 +85,10 @@ class Player:
                 input_ = input("Type C1 or B2 or A1: ").strip()
         return y - 1, ord(x.upper()) - 65
 
+
 class Field:
     def __init__(self):
         self.__ships = [[False] * 10 for i in range(10)]
-        #self.__ships = [[" "] * 10 for i in range(10)]
         self.add_ship()
 
     def has_ships(self):
@@ -130,7 +127,6 @@ class Field:
                         str_ship += "*"
                 else:
                     str_ship += " "
-            #str_ship += "\n"
         return str_ship
 
     def field_without_ships(self):
@@ -146,7 +142,6 @@ class Field:
                         str_ship += " "
                 else:
                     str_ship += " "
-            #str_ship += "\n"
         return str_ship
 
     def add_ship(self):
@@ -159,9 +154,11 @@ class Field:
                     if horizontal:
                         bow = (random.randrange(0, 10), random.randrange(0, 7 + ship_size))
                         for width in range(-1, 5 - ship_size):
-                            if not (0 <= bow[1] + width <= 9): continue
+                            if not (0 <= bow[1] + width <= 9):
+                                continue
                             for height in range(-1, 2):
-                                if not (0 <= bow[0] + height <= 9): continue
+                                if not (0 <= bow[0] + height <= 9):
+                                    continue
                                 if self.__ships[bow[0] + height][bow[1] + width]:
                                     checker = True
                                     break
@@ -170,9 +167,11 @@ class Field:
                     else:
                         bow = (random.randrange(0, 7 + ship_size), random.randrange(0, 10))
                         for height in range(-1, 5 - ship_size):
-                            if not (0 <= bow[0] + height <= 9): continue
+                            if not (0 <= bow[0] + height <= 9):
+                                continue
                             for width in range(-1, 2):
-                                if not (0 <= bow[1] + width <= 9): continue
+                                if not (0 <= bow[1] + width <= 9):
+                                    continue
                                 if self.__ships[bow[0] + height][bow[1] + width]:
                                     checker = True
                                     break
@@ -184,13 +183,11 @@ class Field:
                 if horizontal:
                     for width in range(4 - ship_size):
                         self.__ships[bow[0]][bow[1] + width] = new_ship
-                        #self.__ships[bow[0]][bow[1] + width] = "*"
                 else:
                     for height in range(4 - ship_size):
-                        #self.__ships[bow[0] + height][bow[1]] = "*"
                         self.__ships[bow[0] + height][bow[1]] = new_ship
 
-#a = Field()
+
 class Ship:
     def __init__(self, length=(0, 0), bow=(0, 0), horizontal=True):
         self.bow = bow
@@ -212,5 +209,7 @@ class Ship:
             return True
         else:
             return False
-a = Game()
-a.play_game()
+
+if __name__ == "__main__":
+    game_try = Game()
+    print(game_try.play_game())
